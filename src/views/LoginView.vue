@@ -2,11 +2,11 @@
   <div class="min-h-screen min-w-full flex justify-center items-center">
     <div class="min-w-max flex flex-col items-center">
       <MainLogo containerClass="mb-14"/>
-      <form class="w-4/5">
-        <InputField containerClass="mb-5" inputType="email" inputId="email"/>
+      <form class="w-4/5" @submit-prevent="handleSubmit">
+        <InputField containerClass="mb-5" inputType="email" inputId="email" v-model="email"/>
         <div class="mb-5">
           <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-          <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+          <input type="password" id="password" autocomplete="on" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
         </div>
         <div class="flex flex-row items-center justify-between">
           <div class="flex items-start">
@@ -28,7 +28,7 @@
         <hr class="line">
       </div>
 
-      <button
+      <button @click="sessionStore.googleSignIn"
         type="button" 
         class="text-[#00020c] bg-[#ec9008] 
           hover:bg-[#00020c]/90 
@@ -39,7 +39,7 @@
           font-medium rounded-lg text-sm px-5 py-2.5 
           text-center inline-flex items-center
           me-2 mt-5 mb-2"
-          >
+        :class="{'animate-pulse': sessionStore.currentUser}">
         <GoogleIcon />
         Login in with Google
       </button>
@@ -47,8 +47,26 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
+  import { auth } from '@/firebase';
+  import { useSessionStore } from '@/stores/session';
+  import { ref, onMounted } from 'vue';
   import GoogleIcon from '@/components/Icon/GoogleIcon.vue';
   import MainLogo from '@/components/MainLogo.vue';
   import InputField from '@/components/InputField.vue';
+
+  const sessionStore = useSessionStore();
+  const isLoggedIn = ref(false);
+  const email = ref();
+
+  onMounted(async () => {
+    if(auth.currentUser) {
+      isLoggedIn.value = true
+    }
+  })
+
+  const handleSubmit = () => {
+    console.log('==== email', email.value);
+  }
 </script>
