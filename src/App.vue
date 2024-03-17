@@ -10,7 +10,7 @@
   onMounted(async () => {
     const querySnapshot = await getDocs(departmentsRef)
     querySnapshot.forEach((doc) => {
-      console.log('=== doc', doc.data())
+      console.log('>>> doc', doc.data())
     })
 
     await sessionStore.getAuthenticatedUser();

@@ -1,0 +1,1 @@
+export const TRS_SESSION_KEY = 'trs_session' 

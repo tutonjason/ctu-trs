@@ -67,6 +67,25 @@
   })
 
   const handleSubmit = () => {
-    console.log('==== email', email.value);
+    console.log('>>> email', email.value);
   }
 </script>
+
+<style scoped>
+  .separator {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    color: #8B8E98;
+  }
+
+  .separator .line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background-color: #e8e8e8;
+  }
+</style>
