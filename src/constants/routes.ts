@@ -22,5 +22,5 @@ export const AppRoutes = {
   home: {path: RoutePath.HOME, name: RouteName.HOME},
   login: {path: RoutePath.LOGIN, name: RouteName.LOGIN},
   register: {path: RoutePath.REGISTER, name: RouteName.REGISTER},
-}
+} as const
 

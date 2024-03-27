@@ -1,19 +1,41 @@
 <template>
   <div :class="[containerClass]">
-    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ label }}</label>
+    <label 
+      for="email" 
+      :class="[
+        'block', 
+        'mb-2',
+        AppDesign.DesignConstant.LABEL_FONT_WEIGHT, 
+        AppDesign.TextColors.RICH_BLACK,
+      ]">{{ label }}</label>
     <input 
       :type="type"
       :id="id" 
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       :placeholder="placeholder"
+      :autocomplete="autoComplete"
       v-model="model"
+      :class="[
+        'block', 
+        'w-full', 
+        'p-2.5', 
+        'bg-gray-50', 
+        'border', 
+        'border-gray-300', 
+        'text-gray-900', 
+        'focus:outline-none',
+        AppDesign.DesignConstant.BORDER_RADIUS, 
+        `focus:ring-[#${AppDesign.Colors.CARROT_ORANGE}]`,
+        `focus:border-[#${AppDesign.Colors.CARROT_ORANGE}]`
+      ]"
       required />
   </div>
 </template>
 
 <script setup lang="ts">
 
-  const props = defineProps({
+  import { AppDesign } from '@/constants/design'
+
+  defineProps({
     containerClass: { type: String },
     label: {type: String},
     type: {type: String, required: true},

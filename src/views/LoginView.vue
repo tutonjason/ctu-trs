@@ -4,18 +4,10 @@
       <MainLogo containerClass="mb-14"/>
       <form class="w-4/5" @submit-prevent="handleSubmit">
         <InputField containerClass="mb-5" label="Your email" type="email" id="email" v-model="email"/>
-        <InputField containerClass="mb-5" label="Your password" type="password" id="password" v-model="password" auto-complete="on"/>
+        <InputField containerClass="mb-5" label="Your password" type="password" id="password" v-model="password" autoComplete="current-password"/>
         <div class="flex flex-row items-center justify-between">
-          <div class="flex items-start">
-            <div class="flex items-center h-5 my-auto">
-              <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
-            </div>
-            <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
-          </div>
-          <button
-            type="submit" 
-            class="
-            text-white bg-[#00020c] hover:bg-[#ec9008] hover:text-[#00020c] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+          <CheckBox/>
+          <Button type="submit" name="Login" @on-clicked="handleSubmit"/>
         </div>
       </form>
 
@@ -25,33 +17,28 @@
         <hr class="line">
       </div>
 
-      <button @click="sessionStore.googleSignIn"
-        type="button" 
-        class="text-[#00020c] bg-[#ec9008] 
-          hover:bg-[#00020c]/90 
-          hover:text-white
-          focus:ring-4 
-          focus:outline-none 
-          focus:ring-[#ec9008]/50 
-          font-medium rounded-lg text-sm px-5 py-2.5 
-          text-center inline-flex items-center
-          me-2 mt-5 mb-2"
-        :class="{'animate-pulse': sessionStore.currentUser}">
-        <GoogleIcon />
-        Login in with Google
-      </button>
+      <div class="me-2 mt-5 mb-2">
+        <Button 
+          type="button" 
+          name="Continue with Google" 
+          @on-clicked="handleGoogleSignin">
+          <GoogleIcon />
+        </Button>
+      </div>
     </div>
   </div>
 </template>
 
 
 <script setup lang="ts">
+  import { ref, onMounted } from 'vue';
   import { auth } from '@/firebase';
   import { useSessionStore } from '@/stores/session';
-  import { ref, onMounted } from 'vue';
   import GoogleIcon from '@/components/Icon/GoogleIcon.vue';
   import MainLogo from '@/components/MainLogo.vue';
   import InputField from '@/components/InputField.vue';
+  import Button from '@/components/Button.vue';
+  import CheckBox from '@/components/CheckBox.vue';
 
   const sessionStore = useSessionStore();
   const isLoggedIn = ref(false);
@@ -65,8 +52,16 @@
   })
 
   const handleSubmit = () => {
-    console.log('>>> email', email.value);
+    console.log('>>> testing.....',);
   }
+
+  const handleGoogleSignin = () => sessionStore.googleSignIn()
+
+  // :bgClass="AppDesign.BgColors.CARROT_ORANGE"
+  // :textClass="AppDesign.TextColors.RICH_BLACK"
+  // :hoverBgClass="AppDesign.BgColors.RICH_BLACK"
+  // :hoverTextClass="AppDesign.TextColors.GHOST_WHITE"
+
 </script>
 
 <style scoped>
@@ -87,3 +82,4 @@
     background-color: #e8e8e8;
   }
 </style>
+
